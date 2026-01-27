@@ -287,3 +287,4 @@ MIT License — free to use for educational purposes.
 
 *This is an independent analysis project for educational and portfolio purposes. Not affiliated with any Formula 1 team. All data sourced from publicly available FastF1 telemetry.*
 
+
