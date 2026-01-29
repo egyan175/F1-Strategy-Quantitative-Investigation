@@ -14,7 +14,7 @@ During the 2023 Hungarian Grand Prix, Oscar Piastri jumped from P4 to P2 at the 
 
 Rather than speculate, I built this analysis to investigate the decision using real FastF1 telemetry and quantitative methods.
 
-**The question:**"Did McLaren sacrifice total race time to secure track position, and was that the right trade-off?
+**The main question**: Did McLaren sacrifice total race time to secure track position, and was that the right trade-off?
 ---
 
 ## Key Finding
@@ -32,11 +32,14 @@ At Hungary, where overtaking is notoriously difficult, track position value vast
 ## Techniques Used
 
 This project demonstrates the use of three core analytical techniques:
+
 **Regression Analysis**: Extracted tyre degradation rates from FastF1 telemetry-Notebook 04 
-**Grid Search Optimization**: Found optimal pit windows under operational constraints-Notebook 03 
+
+**Grid Search Optimization**: Found optimal pit windows under operational constraints-Notebook 03
+
 **Monte Carlo Simulation**: Quantified strategy uncertainty across 1,000 race simulations-Notebook 05
 
-See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations.
+
 
 ---
 
@@ -110,8 +113,9 @@ See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations
 
 The Monte Carlo analysis shows that even the "optimal" strategy only beats alternatives **65.6%** of the time due to variance overlap. This quantifies why real teams make "conservative" decisions — they're managing variance, not just expected value.
 
-The "Perez Factor" & Floor Damage: > A critical turning point in Piastri’s second stint was the collision and subsequent wheel-to-wheel battle with Sergio Perez. Telemetry from Stint 2 (Notebook 04) shows a higher Mean Absolute Error (0.971s) and a consistent positive bias, which strongly supports the presence of floor/aero damage. This physical damage likely accelerated tyre degradation beyond the model’s standard decay rate, explaining why his pace fell away significantly compared to the theoretical 1-stop and 2-stop.
----
+
+The "Perez Factor" & Floor Damage:  A critical turning point in Piastri’s second stint was the collision and subsequent wheel-to-wheel battle with Sergio Perez. Telemetry from Stint 2 (Notebook 04) shows a higher Mean Absolute Error (0.971s) and a consistent positive bias, which strongly supports the presence of floor/aero damage. This physical damage likely accelerated tyre degradation beyond the model’s standard decay rate, explaining why his pace fell away significantly compared to the theoretical 1-stop and 2-stop
+
 
 ## Project Structure
 
@@ -123,7 +127,6 @@ F1-Strategy-Hungary-2023/
 ├── 04_Real_Data_Validation.ipynb           # FastF1 validation
 ├── 05_Monte_Carlo_Uncertainty_Analysis.ipynb # Probabilistic analysis
 ├── README.md
-├── TECHNIQUE_GLOSSARY.md
 └── requirements.txt
 ```
 
@@ -283,6 +286,7 @@ MIT License — free to use for educational purposes.
 ---
 
 *This is an independent analysis project for educational and portfolio purposes. Not affiliated with any Formula 1 team. All data sourced from publicly available FastF1 telemetry.*
+
 
 
 
