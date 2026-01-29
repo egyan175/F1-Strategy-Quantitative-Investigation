@@ -32,10 +32,9 @@ At Hungary, where overtaking is notoriously difficult, track position value vast
 ## Techniques Used
 
 This project demonstrates the use of three core analytical techniques:
-|-----------|-------------|----------|
-| **Regression Analysis** | Extracted tyre degradation rates from FastF1 telemetry | 04 |
-| **Grid Search Optimization** | Found optimal pit windows under operational constraints | 03 |
-| **Monte Carlo Simulation** | Quantified strategy uncertainty across 1,000 race simulations | 05 |
+**Regression Analysis**: Extracted tyre degradation rates from FastF1 telemetry-Notebook 04 
+**Grid Search Optimization**: Found optimal pit windows under operational constraints-Notebook 03 
+**Monte Carlo Simulation**: Quantified strategy uncertainty across 1,000 race simulations-Notebook 05
 
 See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations.
 
@@ -284,6 +283,7 @@ MIT License — free to use for educational purposes.
 ---
 
 *This is an independent analysis project for educational and portfolio purposes. Not affiliated with any Formula 1 team. All data sourced from publicly available FastF1 telemetry.*
+
 
 
 
