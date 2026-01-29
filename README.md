@@ -14,15 +14,14 @@ During the 2023 Hungarian Grand Prix, Oscar Piastri jumped from P4 to P2 at the 
 
 Rather than speculate, I built this analysis to investigate the decision using real FastF1 telemetry and quantitative methods.
 
-**The question:** Did McLaren pit Piastri too early, and did this cost him track position?
-
+**The question:**"Did McLaren sacrifice total race time to secure track position, and was that the right trade-off?
 ---
 
 ## Key Finding
 
 Lap 18 was close to **time-optimal** for a 2-stop strategy. The model-optimal timing (laps 25/47) saves only ~1.6s versus Piastri's actual (laps 18/42). However, the analysis revealed something more important:
 
-**McLaren optimized for the wrong objective** — minimizing race time rather than maximizing track position.
+**McLaren prioritized Track Position over theoretical time-optimality." While the model suggested that extending the stint (pitting later at lap 25) would have resulted in a theoretically faster total race time by ~1.6s, doing so would have risked losing track position.
 
 At Hungary, where overtaking is notoriously difficult, track position value vastly exceeds pit timing precision. Monte Carlo analysis shows the "optimal" strategy only beats "suboptimal" alternatives **65.6%** of the time due to variance overlap.
 
@@ -32,9 +31,7 @@ At Hungary, where overtaking is notoriously difficult, track position value vast
 
 ## Techniques Used
 
-This project demonstrates the three core analytical techniques used by F1 strategy engineers:
-
-| Technique | Application | Notebook |
+This project demonstrates the use of three core analytical techniques:
 |-----------|-------------|----------|
 | **Regression Analysis** | Extracted tyre degradation rates from FastF1 telemetry | 04 |
 | **Grid Search Optimization** | Found optimal pit windows under operational constraints | 03 |
@@ -50,7 +47,7 @@ See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations
 
 | Metric | Value | Interpretation |
 |--------|-------|----------------|
-| **Mean Absolute Error (MAE)** | 0.856s | Good — target < 1.0s met ✓ |
+| **Mean Absolute Error (MAE)** | 0.856s | Good — target < 1.0s met  |
 | **Root Mean Square Error (RMSE)** | 1.000s | No catastrophic outliers |
 | **Mean Bias** | +0.622s | Model predicts slightly slower than reality |
 | **Maximum Error** | 1.805s | Worst single-lap prediction |
@@ -61,7 +58,7 @@ See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations
 | Stint | Compound | MAE | Bias | Interpretation |
 |-------|----------|-----|------|----------------|
 | 1 | MEDIUM | 1.244s | +1.244s | Fuel effect underestimated |
-| 2 | HARD | 0.971s | +0.964s | Traffic/damage confounded |
+| 2 | HARD | 0.971s | +0.964s | Traffic/floor(contact with Perez) damage confounded |
 | 3 | MEDIUM | 0.534s | -0.026s | **Excellent fit** |
 
 ### 2. Tyre Degradation Rates (Notebook 04)
@@ -114,6 +111,7 @@ See **[TECHNIQUE_GLOSSARY.md](TECHNIQUE_GLOSSARY.md)** for detailed explanations
 
 The Monte Carlo analysis shows that even the "optimal" strategy only beats alternatives **65.6%** of the time due to variance overlap. This quantifies why real teams make "conservative" decisions — they're managing variance, not just expected value.
 
+The "Perez Factor" & Floor Damage: > A critical turning point in Piastri’s second stint was the collision and subsequent wheel-to-wheel battle with Sergio Perez. Telemetry from Stint 2 (Notebook 04) shows a higher Mean Absolute Error (0.971s) and a consistent positive bias, which strongly supports the presence of floor/aero damage. This physical damage likely accelerated tyre degradation beyond the model’s standard decay rate, explaining why his pace fell away significantly compared to the theoretical 1-stop and 2-stop.
 ---
 
 ## Project Structure
@@ -137,7 +135,7 @@ F1-Strategy-Hungary-2023/
 | **01** | Build physics-based tire/fuel model | `Car` class with lap time simulation |
 | **02** | Add multi-car racing dynamics | `RaceSimulator` with dirty air & pit stops |
 | **03** | Optimize compound selection & pit timing | Optimal pit windows via grid search |
-| **04** | Validate against real FastF1 telemetry | MAE = 0.856s ✓ |
+| **04** | Validate against real FastF1 telemetry | MAE = 0.856s  |
 | **05** | Quantify uncertainty via Monte Carlo | Win probabilities & confidence intervals |
 
 ---
@@ -149,7 +147,7 @@ F1-Strategy-Hungary-2023/
 **Lap Time = Base Pace + Tire Penalty + Fuel Effect + Dirty Air**
 
 ```
-Tire Degradation:  ΔT = age × degradation_rate (s/lap)
+Tyre Degradation:  ΔT = age × degradation_rate (s/lap)
 Fuel Effect:       ΔT = fuel_load × 0.035 (s/kg)  
 Dirty Air:         ΔT = max_penalty / (1 + (gap/ref_gap)²)
 ```
@@ -184,20 +182,20 @@ Dirty Air:         ΔT = max_penalty / (1 + (gap/ref_gap)²)
 
 ## What This Analysis Does NOT Do
 
-✗ Prove what Piastri "should have done" (requires position modelling)  
+✗ Prove what Piastri "should have done" (requires position modeling)  
 ✗ Model competitor reactions or game-theoretic interactions  
-✗ Account for tyre cliff behaviour (non-linear end-of-life degradation)  
+✗ Account for non-linear end-of-life tyre degradation 
 ✗ Model real-time decision-making under incomplete information  
 
 ---
 
 ## Limitations Acknowledged
 
-1. **Linear degradation assumption** — Real tyres degrade non-linearly near end-of-life ("cliff")
+1. **Linear degradation assumption** — Real tyres degrade non-linearly
 2. **No position dynamics** — Model optimizes time, not track position
 3. **Simplified traffic model** — Dirty air effects approximated, not measured per-car
 4. **Single-agent optimization** — Does not model how competitors would react
-5. **No tyre temperature modelling** — Grip changes with thermal state not captured
+5. **No tyre temperature modeling** — Grip changes with thermal state not captured
 6. **Fuel load confounded** — True degradation likely worse than measured
 
 ---
@@ -210,28 +208,28 @@ To properly answer "should Piastri have extended his stint?", future development
 - [ ] Non-linear tyre degradation models (cliff detection)
 - [ ] Position-dependent pace models (dirty air quantified per gap)
 - [ ] Probabilistic overtaking success rates by track position
-- [ ] Game-theoretic strategy optimization (Nash equilibrium)
+- [ ] Game-theoretic strategy optimization 
 - [ ] Temperature-dependent grip model
 
 ---
 
 ##  Talking Points
 
-**Q: Walk me through your modelling approach.**
+**Q: Walk me through your modeling approach.**
 
-> "I built a physics-based tire degradation model grounded in Milliken & Milliken principles, then progressively added complexity: multi-car dynamics with dirty air, compound-specific characteristics, and finally Monte Carlo uncertainty quantification. Each notebook builds on the previous, allowing me to isolate and validate each component."
+> I built a physics-based tyre degradation model grounded in Milliken & Milliken principles, then progressively added complexity: multi-car dynamics with dirty air, compound-specific characteristics, and finally Monte Carlo uncertainty quantification. Each notebook builds on the previous, allowing me to isolate and validate each component.
 
 **Q: What did validation reveal?**
 
-> "The model achieved 0.856 seconds MAE against real FastF1 telemetry—below my 1.0s target. Interestingly, accuracy varied by stint: Stint 3 showed near-zero bias (MAE 0.534s), while early stints overpredicted by ~1.2s. This suggests fuel load effects are confounded with tire degradation early in the race."
+> The model achieved 0.856 seconds MAE against real FastF1 telemetry—below my 1.0s target. Interestingly, accuracy varied by stint: Stint 3 showed near-zero bias (MAE 0.534s), while early stints overpredicted by ~1.2s. This suggests fuel load effects are confounded with tyre degradation early in the race.
 
 **Q: What was the most surprising finding?**
 
-> "That 'optimal' strategies only win about 65% of head-to-head comparisons against 'suboptimal' ones. Running 1,000 paired simulations, the mathematically optimal pit timing only beat the actual timing 65.6% of the time. The distributions overlap significantly due to variance. This quantifies why real teams make conservative decisions—they're managing variance, not just expected value."
+> I initially thought extending was better, but the data showed that the time-optimal window was so narrow that McLaren likely chose the 'safer' Lap 18 stop to protect track position, recognizing that being overtaken in the pits is much costlier than having slightly older tyres at the end
 
 **Q: How would you improve this model?**
 
-> "Three main areas: First, model traffic as position-dependent rather than averaged—losing P2 to P5 costs ~45-60s in traffic. Second, add non-linear tire degradation to capture the 'cliff' effect. Third, include game-theoretic competitor reactions—real strategy is multi-agent, not single-agent optimization."
+> Three main areas: First, model traffic as position-dependent rather than averaged—losing P2 to P5 costs ~45-60s in traffic. Second, add non-linear tyre degradation. Third, include game-theoretic competitor reactions—real strategy is multi-agent, not single-agent optimization.
 
 ---
 
@@ -286,5 +284,6 @@ MIT License — free to use for educational purposes.
 ---
 
 *This is an independent analysis project for educational and portfolio purposes. Not affiliated with any Formula 1 team. All data sourced from publicly available FastF1 telemetry.*
+
 
 
