@@ -1,6 +1,7 @@
-﻿# F1 Race Strategy Analysis: Oscar Piastri — 2023 Hungarian Grand Prix
+﻿# F1 Strategy: A Quantitative Investigation
+Case Study: McLaren & Oscar Piastri — 2023 Hungarian Grand Prix
 
-A quantitative investigation into McLaren's pit stop strategy using real telemetry data, physics-based modelling, and Monte Carlo simulation.
+This project is a deep-dive quantitative investigation into the trade-off between theoretical time-optimality and real-world track position. By bridging the gap between physics-based modeling and stochastic simulation, this analysis determines whether McLaren’s strategy was a "mistake" or a calculated management of risk.
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![FastF1](https://img.shields.io/badge/FastF1-3.7+-orange.svg)
@@ -286,6 +287,7 @@ MIT License — free to use for educational purposes.
 ---
 
 *This is an independent analysis project for educational and portfolio purposes. Not affiliated with any Formula 1 team. All data sourced from publicly available FastF1 telemetry.*
+
 
 
 
